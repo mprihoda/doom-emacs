@@ -1116,7 +1116,9 @@ compelling reason, so..."
     (run-hooks 'org-load-hook))
 
   :config
-  (set-company-backend! 'org-mode 'company-capf 'company-dabbrev)
+  (if (and (featurep! :completion company) (featurep! +roam))
+      (set-company-backend! 'org-mode 'company-org-roam 'company-capf 'company-dabbrev)
+    (set-company-backend! 'org-mode 'company-capf 'company-dabbrev))
   (set-eval-handler! 'org-mode #'+org-eval-handler)
   (set-lookup-handlers! 'org-mode
     :definition #'+org-lookup-definition-handler
